@@ -17,19 +17,24 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/qt5/qtbase"] = "default"
         self.runtimeDependencies["libs/libnova"] = "default"
         self.runtimeDependencies["libs/cfitsio"] = "default"
-        
+        self.runtimeDependencies["libs/libgphoto2"] = "default"
         self.runtimeDependencies["libs/libftdi"] = "default"
         self.runtimeDependencies["libs/libdc1394"] = "default"
+        self.runtimeDependencies["libs/libraw"] = "default"
         self.runtimeDependencies["libs/fftw"] = "default"
-        
+        self.runtimeDependencies["libs/ffmpeg"] = "default"
         self.runtimeDependencies["libs/indiserver"] = "default"
         self.runtimeDependencies["libs/libapogee"] = "default"
-        #self.runtimeDependencies["libs/libdpsau"] = "default"
+        self.runtimeDependencies["libs/libdspau"] = "default"
+        self.runtimeDependencies["libs/librtlsdr"] = "default"
         self.runtimeDependencies["libs/libfishcamp"] = "default"
         self.runtimeDependencies["libs/libfli"] = "default"
         self.runtimeDependencies["libs/libqhy"] = "default"
         self.runtimeDependencies["libs/libqsi"] = "default"
         self.runtimeDependencies["libs/libsbig"] = "default"
+        self.runtimeDependencies["libs/libaltair"] = "default"
+        self.runtimeDependencies["libs/libtoupcam"] = "default"
+        self.runtimeDependencies["libs/libatik"] = "default"
 
 
 

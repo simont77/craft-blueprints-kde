@@ -26,6 +26,7 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/indiserver-latest"] = "default"
         self.runtimeDependencies["libs/libapogee-latest"] = "default"
         self.runtimeDependencies["libs/libdspau-latest"] = "default"
+        self.runtimeDependencies["libs/librtlsdr"] = "default"
         self.runtimeDependencies["libs/libfishcamp-latest"] = "default"
         self.runtimeDependencies["libs/libfli-latest"] = "default"
         self.runtimeDependencies["libs/libqhy-latest"] = "default"
