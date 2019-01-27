@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import info
+import os
 
 
 class subinfo(info.infoclass):
@@ -37,6 +38,22 @@ class Package(AutoToolsPackageBase):
         " --enable-avx" \
         " --enable-avx2" \
         " --prefix=" + prefix
+        
+#This is required because of a current bug in fftw where it tries to include a non-existant file for projects that depend on fftw
+#This bug only exists in AutoTools builds not cmake builds, but they recommend autotools builds and provide the documentation for that.
+#This should fix it until they fix the bug.
+    def postQmerge(self):
+        root = CraftCore.standardDirs.craftRoot()
+        craftLibDir = os.path.join(root,  'lib')
+        f1name = os.path.join(craftLibDir, "cmake/fftw3/FFTW3Config.cmake")
+        f1 = open(f1name, 'r')
+        filedata = f1.read()
+        f1.close()
+        filedata = filedata.replace('\ninclude ("${CMAKE_CURRENT_LIST_DIR}/FFTW3LibraryDepends.cmake")', '\n#include ("${CMAKE_CURRENT_LIST_DIR}/FFTW3LibraryDepends.cmake")')
+        f1 = open(f1name, 'w')
+        f1.write(filedata)
+        f1.close()
+        return True
 
 
 
