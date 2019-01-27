@@ -27,3 +27,11 @@ class Package(CMakePackageBase):
         self.subinfo.options.configure.testDefine = "-DBUILD_tests=ON  -DBUILD_examples=ON"
         self.subinfo.options.configure.toolsDefine = "-DBUILD_tools=ON"  # available only from 2.1.0-beta3
         self.subinfo.options.configure.staticArgs = "-DBUILD_shared=OFF"  # available only from 2.1.0-beta3
+        
+    def postQmerge(self):
+        packageName = "libexpat"
+        root = CraftCore.standardDirs.craftRoot()
+        craftLibDir = os.path.join(root,  'lib')
+        utils.system("install_name_tool -add_rpath " + craftLibDir + " " + craftLibDir +"/" + packageName + ".dylib")
+        utils.system("install_name_tool -id @rpath/" + packageName + ".dylib " + craftLibDir +"/" + packageName + ".dylib")
+        return True

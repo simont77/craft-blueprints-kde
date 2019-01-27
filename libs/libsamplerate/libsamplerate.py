@@ -16,13 +16,16 @@ class subinfo(info.infoclass):
 
     def setDependencies(self):
         self.runtimeDependencies["virtual/base"] = None
+        self.runtimeDependencies["libs/libsndfile"] = None
 
 
 if CraftCore.compiler.isGCCLike():
     class Package(AutoToolsPackageBase):
         def __init__(self):
             AutoToolsPackageBase.__init__(self)
-            self.subinfo.options.configure.args = " --disable-static --disable-sndfile "
+            self.subinfo.options.configure.ldflags += "-framework Carbon"
+            self.subinfo.options.configure.cflags += "-I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Carbon.framework/Versions/A/Headers/"
+            self.subinfo.options.configure.cxxflags += "-I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Carbon.framework/Versions/A/Headers/"
 else:
     class Package(CMakePackageBase):
         def __init__(self):

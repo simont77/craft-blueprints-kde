@@ -28,3 +28,12 @@ class subinfo(info.infoclass):
 class Package(CMakePackageBase):
     def __init__(self, **args):
         CMakePackageBase.__init__(self)
+        
+    def postQmerge(self):
+        packageName = "libz"
+        root = CraftCore.standardDirs.craftRoot()
+        craftLibDir = os.path.join(root,  'lib')
+        utils.system("install_name_tool -add_rpath " + craftLibDir + " " + craftLibDir +"/" + packageName + ".dylib")
+        utils.system("install_name_tool -id @rpath/" + packageName + ".dylib " + craftLibDir +"/" + packageName + ".dylib")
+        return True
+        

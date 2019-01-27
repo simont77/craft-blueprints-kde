@@ -28,6 +28,13 @@ if not CraftCore.compiler.isWindows:
     class Package(AutoToolsPackageBase):
         def __init__(self):
             AutoToolsPackageBase.__init__(self)
+        def postQmerge(self):
+        	packageName = "liblcms2"
+        	root = CraftCore.standardDirs.craftRoot()
+        	craftLibDir = os.path.join(root,  'lib')
+        	utils.system("install_name_tool -add_rpath " + craftLibDir + " " + craftLibDir +"/" + packageName + ".dylib")
+        	utils.system("install_name_tool -id @rpath/" + packageName + ".dylib " + craftLibDir +"/" + packageName + ".dylib")
+        	return True
 else:
     class Package(CMakePackageBase):
         def __init__(self):

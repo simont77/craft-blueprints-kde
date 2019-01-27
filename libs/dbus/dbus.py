@@ -106,3 +106,23 @@ class Package(CMakePackageBase):
                                    os.path.join(imagedir, "libdbus-1d.dll.a"))
 
         return True
+    
+    # This method needs to be revised.  I tried to get it to add the rpath to the library first, so it could then link the bin files with rpath correctly
+    # But no matter what I tried, I could not get it to add the rpath to the library in time to set the bin files to link correctly with rpath.
+    # Either it ended up adding the rpath to the library and then overwriting the change with files from the archive,
+    # or it ended up adding the rpath to the library after it already had linked all the files to the wrong library path.
+    # Also note that I only changed the two files we need for the mac version of KStars and the library file.
+        
+    def postQmerge(self):
+        packageName = "libdbus-1.3"
+        root = CraftCore.standardDirs.craftRoot()
+        craftLibDir = os.path.join(root,  'lib')
+        libDir = os.path.join(self.imageDir(), "lib")
+        binDir = os.path.join(self.imageDir(), "bin")
+        utils.system("install_name_tool -add_rpath " + craftLibDir + " " + libDir +"/" + packageName + ".dylib")
+        utils.system("install_name_tool -id @rpath/" + packageName + ".dylib " + libDir +"/" + packageName + ".dylib")
+        
+        utils.system("install_name_tool -change " + packageName + ".dylib @rpath/" + packageName + ".dylib " + binDir + "/dbus-daemon")
+        utils.system("install_name_tool -change " + packageName + ".dylib @rpath/" + packageName + ".dylib " + binDir + "/dbus-send")
+        return True
+        
