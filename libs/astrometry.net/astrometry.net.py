@@ -24,6 +24,8 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/netpbm"] = "default"
         self.runtimeDependencies["libs/wcslib"] = "default"
         self.runtimeDependencies["libs/gsl"] = "default"
+        self.runtimeDependencies["libs/numpy"] = "default"
+        self.runtimeDependencies["libs/pyfits"] = "default"
 
 from Package.AutoToolsPackageBase import *
 

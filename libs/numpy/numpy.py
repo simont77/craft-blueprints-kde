@@ -4,11 +4,12 @@ from Package.PipPackageBase import *
 
 
 class subinfo(info.infoclass):
-    # def setDependencies( self ):
-
     def setTargets(self):
         self.svnTargets['master'] = ''
         self.defaultTarget = 'master'
+        
+    def setDependencies( self ):
+        self.runtimeDependencies["dev-utils/python2"] = None
 
 
 class Package(PipPackageBase):
