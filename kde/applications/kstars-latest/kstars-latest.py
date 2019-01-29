@@ -122,7 +122,7 @@ class Package(CMakePackageBase):
         
         #Embedded python for astrometry.
         utils.system("mkdir -p " + KSTARS_APP + "/Contents/MacOS/python/bin")
-        utils.system("cp -f " + craftRoot + "/dev-utils/bin/python2 ${KSTARS_APP}/Contents/MacOS/python/bin/python")
+        utils.system("cp -f " + craftRoot + "/dev-utils/bin/python2 " + KSTARS_APP + "/Contents/MacOS/python/bin/python")
         
         #Required numpy and pyfits for embedded astrometry
         utils.system("mkdir -p " + KSTARS_APP + "/Contents/MacOS/python/bin/site-packages")
