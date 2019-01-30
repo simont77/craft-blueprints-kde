@@ -157,6 +157,7 @@ class Package(CMakePackageBase):
         utils.system("cp -f " + KStarsMacFiles + "/org.freedesktop.dbus-kstars.plist " + KSTARS_PLUGINS + "/dbus/")
         
         #	Phonon backend and vlc plugins
+		utils.system("tar -xzf " + KStarsMacFiles + "/FrameworksForVLC.zip -C " + KSTARS_APP + "/Contents/")
         utils.system("tar -xzf " + KStarsMacFiles + "/backend.zip -C " + KSTARS_PLUGINS)
         utils.system("tar -xzf " + KStarsMacFiles + "/vlc.zip -C " + KSTARS_PLUGINS)
         
