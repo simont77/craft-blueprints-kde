@@ -6,10 +6,16 @@ import info
 
 class subinfo(info.infoclass):
     def setTargets(self):
-        self.svnTargets['1.7.3'] = "https://github.com/indilib/indi.git||v1.7.3"
         self.description = 'INDI Library 3rd Party'
-        self.defaultTarget = '1.7.3'
-        self.targetInstSrc['1.7.3'] = "3rdParty"
+        self.svnTargets['Latest'] = "https://github.com/indilib/indi.git"
+        self.targetInstSrc['Latest'] = "3rdParty"
+        
+        ver = '1.7.5'
+        self.svnTargets[ver] = "https://github.com/indilib/indi.git||v" + ver
+        self.archiveNames[ver] = 'indi-%s.tar.gz' % ver
+        self.targetInstSrc[ver] = "3rdParty"
+
+        self.defaultTarget = ver
     
     def setDependencies(self):
         self.buildDependencies["dev-utils/grep"] = "default"
@@ -21,20 +27,11 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/libftdi"] = "default"
         self.runtimeDependencies["libs/libdc1394"] = "default"
         self.runtimeDependencies["libs/libraw"] = "default"
+        self.runtimeDependencies["libs/tiff"] = "default"
         self.runtimeDependencies["libs/fftw"] = "default"
         self.runtimeDependencies["libs/ffmpeg"] = "default"
         self.runtimeDependencies["libs/indiserver"] = "default"
-        self.runtimeDependencies["libs/libapogee"] = "default"
-        self.runtimeDependencies["libs/libdspau"] = "default"
         self.runtimeDependencies["libs/librtlsdr"] = "default"
-        self.runtimeDependencies["libs/libfishcamp"] = "default"
-        self.runtimeDependencies["libs/libfli"] = "default"
-        self.runtimeDependencies["libs/libqhy"] = "default"
-        self.runtimeDependencies["libs/libqsi"] = "default"
-        self.runtimeDependencies["libs/libsbig"] = "default"
-        self.runtimeDependencies["libs/libaltair"] = "default"
-        self.runtimeDependencies["libs/libtoupcam"] = "default"
-        self.runtimeDependencies["libs/libatik"] = "default"
 
 
 
