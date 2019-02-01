@@ -30,7 +30,7 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/tiff"] = "default"
         self.runtimeDependencies["libs/fftw"] = "default"
         self.runtimeDependencies["libs/ffmpeg"] = "default"
-        self.runtimeDependencies["libs/indiserver"] = "default"
+        self.runtimeDependencies["libs/indiserver"] = "Latest"
         self.runtimeDependencies["libs/librtlsdr"] = "default"
 
 
