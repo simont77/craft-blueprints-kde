@@ -3,41 +3,46 @@ import os
 
 class subinfo(info.infoclass):
     def setTargets(self):
+        self.versionInfo.setDefaultValues()
         self.description = 'a desktop planetarium'
-        self.svnTargets['Latest'] = "https://github.com/KDE/kstars.git"
-        self.targetInstSrc['Latest'] = ""
         self.displayName = "KStars Desktop Planetarium"
-        self.defaultTarget = 'Latest'
+        
+        self.svnTargets['Latest'] = "https://github.com/KDE/kstars.git"
+        
+        for ver in ['3.0.0']:
+            self.targets[ver] = 'http://download.kde.org/stable/kstars/kstars-%s.tar.xz' % ver
+            self.targetInstSrc[ver] = 'kstars-%s' % ver
+            
+        self.defaultTarget = '3.0.0'
 
     def setDependencies(self):
-        self.runtimeDependencies["libs/qt5/qtbase"] = "default"
-        self.runtimeDependencies["libs/qt5/qtdeclarative"] = "default"
-        self.runtimeDependencies["libs/qt5/qtquickcontrols"] = "default"
-        self.runtimeDependencies["libs/qt5/qtquickcontrols2"] = "default"
-        self.runtimeDependencies["libs/qt5/qtsvg"] = "default"
-        self.runtimeDependencies["libs/qt5/qtdatavis3d"] = "default"
-        self.runtimeDependencies["libs/qt5/qtwebsockets"] = "default"
-        self.runtimeDependencies["kde/frameworks/tier1/kconfig"] = "default"
-        self.runtimeDependencies["kde/frameworks/tier2/kdoctools"] = "default"
-        self.runtimeDependencies["kde/frameworks/tier1/kwidgetsaddons"] = "default"
-        self.runtimeDependencies["kde/frameworks/tier3/knewstuff"] = "default"
-        self.runtimeDependencies["kde/frameworks/tier1/kdbusaddons"] = "default"
-        self.runtimeDependencies["kde/frameworks/tier1/ki18n"] = "default"
-        self.runtimeDependencies["kde/frameworks/tier3/kinit"] = "default"
-        self.runtimeDependencies["kde/frameworks/tier2/kjobwidgets"] = "default"
-        self.runtimeDependencies["kde/frameworks/tier3/kio"] = "default"
-        self.runtimeDependencies["kde/frameworks/tier3/kxmlgui"] = "default"
-        self.runtimeDependencies["kde/frameworks/tier1/kplotting"] = "default"
-        self.runtimeDependencies["kde/frameworks/tier3/knotifications"] = "default"
-        self.runtimeDependencies["kde/frameworks/tier3/knotifyconfig"] = "default"
-        self.runtimeDependencies["libs/eigen3"] = "default"
-        self.runtimeDependencies["libs/cfitsio"] = "default"
-        self.runtimeDependencies["libs/wcslib"] = "default"
-        self.runtimeDependencies["libs/indiclient"] = "default"
-        self.runtimeDependencies["libs/libraw"] = "default"
-        self.runtimeDependencies["libs/gsl"] = "default"
-        self.runtimeDependencies["qt-libs/phonon-vlc"] = "default"
-        self.runtimeDependencies["qt-libs/qtkeychain"] = "default"
+        self.runtimeDependencies["libs/qt5/qtbase"] = None
+        self.runtimeDependencies["libs/qt5/qtdeclarative"] = None
+        self.runtimeDependencies["libs/qt5/qtquickcontrols"] = None
+        self.runtimeDependencies["libs/qt5/qtquickcontrols2"] = None
+        self.runtimeDependencies["libs/qt5/qtsvg"] = None
+        self.runtimeDependencies["libs/qt5/qtdatavis3d"] = None
+        self.runtimeDependencies["libs/qt5/qtwebsockets"] = None
+        self.runtimeDependencies["kde/frameworks/tier1/kconfig"] = None
+        self.runtimeDependencies["kde/frameworks/tier2/kdoctools"] = None
+        self.runtimeDependencies["kde/frameworks/tier1/kwidgetsaddons"] = None
+        self.runtimeDependencies["kde/frameworks/tier3/knewstuff"] = None
+        self.runtimeDependencies["kde/frameworks/tier1/kdbusaddons"] = None
+        self.runtimeDependencies["kde/frameworks/tier1/ki18n"] = None
+        self.runtimeDependencies["kde/frameworks/tier3/kinit"] = None
+        self.runtimeDependencies["kde/frameworks/tier2/kjobwidgets"] = None
+        self.runtimeDependencies["kde/frameworks/tier3/kio"] = None
+        self.runtimeDependencies["kde/frameworks/tier3/kxmlgui"] = None
+        self.runtimeDependencies["kde/frameworks/tier1/kplotting"] = None
+        self.runtimeDependencies["kde/frameworks/tier3/knotifications"] = None
+        self.runtimeDependencies["kde/frameworks/tier3/knotifyconfig"] = None
+        self.runtimeDependencies["libs/eigen3"] = None
+        self.runtimeDependencies["libs/cfitsio"] = None
+        self.runtimeDependencies["libs/wcslib"] = None
+        self.runtimeDependencies["libs/indiclient"] = None
+        self.runtimeDependencies["libs/libraw"] = None
+        self.runtimeDependencies["libs/gsl"] = None
+        self.runtimeDependencies["qt-libs/qtkeychain"] = None
         
         self.runtimeDependencies["libs/libgphoto2"] = "default"
         self.runtimeDependencies["libs/astrometry.net"] = "default"
@@ -46,11 +51,14 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/netpbmForKStars"] = "default"
         self.runtimeDependencies["libs/xplanet"] = "default"
         self.runtimeDependencies["libs/gsc"] = "default"
-        self.runtimeDependencies["libs/indiserver-latest"] = "default"
-        self.runtimeDependencies["libs/indiserver3rdParty-latest"] = "default"
+        #self.runtimeDependencies["libs/indiserver"] = "Latest"
+        #self.runtimeDependencies["libs/indiserver3rdParty"] = "Latest"
 
         # Install proper theme
-        self.runtimeDependencies["kde/frameworks/tier1/breeze-icons"] = "default"
+        self.runtimeDependencies["kde/frameworks/tier1/breeze-icons"] = None
+        
+        if not CraftCore.compiler.isMacOS:
+            self.runtimeDependencies["qt-libs/phonon-vlc"] = None
 
 
 from Package.CMakePackageBase import *
@@ -176,10 +184,3 @@ class Package(CMakePackageBase):
         utils.system("cp -f " + craftRoot + "/share/icons/breeze-dark/breeze-icons-dark.rcc " + KSTARS_RESOURCES + "/icons/")
 
         return True
-
-    def createPackage(self):
-        self.defines["executable"] = "bin\\kstars.exe"
-        #self.defines["setupname"] = "kstars-latest-win64.exe"
-        self.defines["icon"] = os.path.join(self.packageDir(), "kstars.ico")
-
-        return TypePackager.createPackage(self)
