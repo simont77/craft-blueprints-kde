@@ -184,13 +184,13 @@ class Package(CMakePackageBase):
         utils.system("cp -f " + craftRoot + "/share/icons/breeze-dark/breeze-icons-dark.rcc " + KSTARS_RESOURCES + "/icons/")
         
         # qt.conf
-        var confContents = "[Paths]\n"
+        confContents = "[Paths]\n"
         confContents += "Prefix = " + craftRoot + "\n"
-        confContents += "Plugins = plugins + "\n"
+        confContents += "Plugins = plugins\n"
         confContents += "Imports = qml\n"
         confContents += "Qml2Imports = qml\n"
         
         utils.system("touch " + KSTARS_RESOURCES + "/qt.conf")
-        utils.system("echo " + confContents + " >> " + KSTARS_RESOURCES + "/qt.conf")
+        utils.system("echo \"" + confContents + "\" >> " + KSTARS_RESOURCES + "/qt.conf")
 
         return True
