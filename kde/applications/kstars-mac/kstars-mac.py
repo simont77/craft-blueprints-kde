@@ -191,6 +191,6 @@ class Package(CMakePackageBase):
         confContents += "Qml2Imports = qml\n"
         
         utils.system("touch " + KSTARS_RESOURCES + "/qt.conf")
-        utils.system("echo " + confContents " >> " + KSTARS_RESOURCES + "/qt.conf")
+        utils.system("echo " + confContents + " >> " + KSTARS_RESOURCES + "/qt.conf")
 
         return True
