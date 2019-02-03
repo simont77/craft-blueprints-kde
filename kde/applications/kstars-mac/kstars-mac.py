@@ -90,8 +90,9 @@ class Package(CMakePackageBase):
         #	The Data Directory
         utils.system("cp -rf " + sourceDir + "/kstars/data " + KSTARS_RESOURCES)
         
-        #Translations Directory??
-        
+        #	The Translations Directory
+        utils.system("cp -rf " + craftRoot + "/share/locale " + KSTARS_RESOURCES)
+				
         #	INDI Drivers
         utils.system("mkdir -p " + KSTARS_APP + "/Contents/MacOS/indi")
         utils.system("cp -f " + craftRoot + "/bin/indi* " + KSTARS_APP + "/Contents/MacOS/indi/")
