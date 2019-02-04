@@ -37,3 +37,4 @@ class Package(AutoToolsPackageBase):
         
         craftLibDir = os.path.join(prefix,  'lib')
         self.subinfo.options.configure.ldflags += '-Wl,-rpath,' + craftLibDir
+        self.subinfo.options.configure.args += '-DUSE_SDK="no"'
