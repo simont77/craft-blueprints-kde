@@ -28,7 +28,7 @@ class Package(AutoToolsPackageBase):
     def __init__( self, **args ):
         AutoToolsPackageBase.__init__( self )
         prefix = self.shell.toNativePath(CraftCore.standardDirs.craftRoot())
-        self.subinfo.options.configure.args += "--disable-dependency-tracking" \
+        self.subinfo.options.configure.args = "--disable-dependency-tracking" \
         " --without-cygwin" \
         " --with-x=no" \
         " --without-xscreensaver" \
@@ -36,5 +36,7 @@ class Package(AutoToolsPackageBase):
         " --prefix=" + prefix
         
         craftLibDir = os.path.join(prefix,  'lib')
-        self.subinfo.options.configure.ldflags += '-Wl,-rpath,' + craftLibDir
-        self.subinfo.options.configure.args += '-DUSE_SDK="no"'
+        craftIncludeDir = os.path.join(prefix,  'include')
+        self.subinfo.options.configure.ldflags = '-Wl -rpath ' + craftLibDir + ' -L' + craftLibDir
+        self.subinfo.options.configure.cxxflags = "-I" + craftIncludeDir + " -I/usr/local/include"
+        self.subinfo.options.configure.cflags = "-I" + craftIncludeDir + " -I/usr/local/include"
