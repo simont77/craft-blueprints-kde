@@ -38,5 +38,3 @@ class Package(AutoToolsPackageBase):
         craftLibDir = os.path.join(prefix,  'lib')
         craftIncludeDir = os.path.join(prefix,  'include')
         self.subinfo.options.configure.ldflags = '-Wl -rpath ' + craftLibDir + ' -L' + craftLibDir
-        self.subinfo.options.configure.cxxflags = "-I" + craftIncludeDir + " -I/usr/local/include"
-        self.subinfo.options.configure.cflags = "-I" + craftIncludeDir + " -I/usr/local/include"
