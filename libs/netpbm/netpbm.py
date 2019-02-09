@@ -15,7 +15,6 @@ class subinfo(info.infoclass):
 
     def setDependencies(self):
         self.runtimeDependencies["virtual/base"] = "default"
-        self.runtimeDependencies["libs/netpbm"] = "default"
         self.runtimeDependencies["libs/jasper"] = "default"
         self.runtimeDependencies["libs/libjpeg-turbo"] = "default"
         self.runtimeDependencies["libs/libpng"] = "default"
