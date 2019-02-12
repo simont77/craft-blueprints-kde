@@ -195,5 +195,17 @@ class Package(CMakePackageBase):
         
         utils.system("touch " + KSTARS_RESOURCES + "/qt.conf")
         utils.system("echo \"" + confContents + "\" >> " + KSTARS_RESOURCES + "/qt.conf")
+        
+        #	Editing the info.plist file
+        pListFile = KSTARS_APP + "/Contents/info.plist"
+
+		utils.system("plutil -insert NSPrincipalClass -string NSApplication " + pListFile)
+		utils.system("plutil -insert NSHighResolutionCapable -string True " + pListFile)
+		utils.system("plutil -insert NSRequiresAquaSystemAppearance -string NO " + pListFile)
+		utils.system("plutil -replace CFBundleName -string KStars " + pListFile)
+		utils.system("plutil -replace CFBundleVersion -string ${KSTARS_VERSION} " + pListFile)
+		utils.system("plutil -replace CFBundleLongVersionString -string ${KSTARS_VERSION} " + pListFile)
+		utils.system("plutil -replace CFBundleShortVersionString -string ${KSTARS_VERSION} " + pListFile)
+		utils.system("plutil -replace NSHumanReadableCopyright -string '© 2001 - 2018, The KStars Team, Freely Released under GNU GPL V2'"  + pListFile)
 
         return True
