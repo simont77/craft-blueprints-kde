@@ -25,3 +25,9 @@ class Package(AutoToolsPackageBase):
         " --disable-gtk" \
         " --disable-silent-rules" \
         " --prefix=" + prefix
+    #	Note that this setting of the environment flags to nothing solves a build error on Sierra because the system headers have issues.
+    def configure(self):
+        self.shell.environment["CXXFLAGS"]=""
+        self.shell.environment["CFLAGS"]=""
+        AutoToolsPackageBase.configure(self)
+        return True
