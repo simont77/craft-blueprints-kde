@@ -205,6 +205,6 @@ class Package(CMakePackageBase):
         utils.system("plutil -replace CFBundleVersion -string ${KSTARS_VERSION} " + pListFile)
         utils.system("plutil -replace CFBundleLongVersionString -string ${KSTARS_VERSION} " + pListFile)
         utils.system("plutil -replace CFBundleShortVersionString -string ${KSTARS_VERSION} " + pListFile)
-        utils.system("plutil -replace NSHumanReadableCopyright -string \"© 2001 - 2018, The KStars Team, Freely Released under GNU GPL V2\""  + pListFile)
+        utils.system("plutil -replace NSHumanReadableCopyright -string \"© 2001 - 2018, The KStars Team, Freely Released under GNU GPL V2\" "  + pListFile)
 
         return True
