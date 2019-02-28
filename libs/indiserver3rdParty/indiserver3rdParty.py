@@ -34,6 +34,7 @@ class subinfo(info.infoclass):
         #self.runtimeDependencies["libs/indiserver"] = "Latest"
         #self.runtimeDependencies["libs/indiserver3rdPartyLibraries"] = "Latest"
         self.runtimeDependencies["libs/librtlsdr"] = "default"
+        self.runtimeDependencies["libs/limesuite"] = "default"
 
 
 
