@@ -122,7 +122,7 @@ class Package(CMakePackageBase):
         utils.system("cp -Rf " + astometryBinDir + " " + astrometryDestDir + "/")
         utils.system("cp -Rf " + astometryLibDir + " " + astrometryDestDir + "/")
         
-        utils.system("cp -f  " + craftRoot + "/etc/astrometry.cfg " + astrometryDestDir + "/bin/")
+        utils.system("cp -f  " + KStarsMacFiles + "/astrometry.cfg " + astrometryDestDir + "/bin/")
         
         #	Netpbm for astrometry
         netpbmBinDir =  os.path.join(craftRoot , 'netpbm', 'bin')
