@@ -100,7 +100,7 @@ class Package(CMakePackageBase):
         
         #	INDI firmware files"
         utils.system("mkdir -p " + KSTARS_RESOURCES + "/DriverSupport/")
-        utils.system("cp -rf " + craftRoot + "/lib/indi/DriverSupport " + KSTARS_RESOURCES)
+        utils.system("cp -rf " + craftRoot + "/usr/local/lib/indi/DriverSupport " + KSTARS_RESOURCES)
         
         #	Driver XML Files
         utils.system("cp -f " + craftRoot + "/share/indi/* " + KSTARS_RESOURCES + "/DriverSupport/")
