@@ -9,11 +9,11 @@ class subinfo(info.infoclass):
         
         self.svnTargets['Latest'] = "https://github.com/KDE/kstars.git"
         
-        for ver in ['3.0.0']:
+        for ver in ['3.1.1']:
             self.targets[ver] = 'http://download.kde.org/stable/kstars/kstars-%s.tar.xz' % ver
             self.targetInstSrc[ver] = 'kstars-%s' % ver
             
-        self.defaultTarget = '3.0.0'
+        self.defaultTarget = '3.1.1'
 
     def setDependencies(self):
         self.runtimeDependencies["libs/qt5/qtbase"] = None
