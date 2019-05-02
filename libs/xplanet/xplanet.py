@@ -36,12 +36,14 @@ class Package(AutoToolsPackageBase):
         " --prefix=" + prefix
         
         craftLibDir = os.path.join(prefix,  'lib')
-        craftIncludeDir = os.path.join(prefix,  'include')
+        
         self.subinfo.options.configure.ldflags = '-Wl -rpath ' + craftLibDir + ' -L' + craftLibDir
         
-         #	Note that this setting of the environment flags to nothing solves a build error on Sierra because the system headers have issues.
+         #	Note that this setting of the environment flags solves a build error on Sierra because the system headers have issues.
     def configure(self):
-        self.shell.environment["CXXFLAGS"]=""
-        self.shell.environment["CFLAGS"]=""
+        prefix = self.shell.toNativePath(CraftCore.standardDirs.craftRoot())
+        craftIncludeDir = os.path.join(prefix,  'include')
+        self.shell.environment["CXXFLAGS"] = '-I' + craftIncludeDir
+        self.shell.environment["CFLAGS"] = '-I' + craftIncludeDir
         AutoToolsPackageBase.configure(self)
         return True
