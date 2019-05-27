@@ -4,23 +4,25 @@ import info
 class subinfo(info.infoclass):
     def setTargets(self):
         self.svnTargets['master'] = "[git]https://github.com/ampl/gsl.git"
-        for ver in ["2.2.1"]:
-            self.targets[ver] = f"https://github.com/ampl/gsl/archive/v{ver}.tar.gz"
+        for ver in ["2.5"]:
+            self.targets[ver] = f"https://ftp.gnu.org/gnu/gsl/gsl-{ver}.tar.gz"
             self.targetInstSrc[ver] = f"gsl-{ver}"
             self.archiveNames[ver] = f"gsl-{ver}.tar.gz"
-        self.targetDigests['2.2.1'] = (
-            ['ca58c082a925efe83a30ae4b9882511aee5937f6e6db17e43365a60e29a0a52e'], CraftHash.HashAlgorithm.SHA256)
+        self.targetDigests['2.5'] = (
+            ['0460ad7c2542caaddc6729762952d345374784100223995eb14d614861f2258d'], CraftHash.HashAlgorithm.SHA256)
         self.description = 'GNU Scientific Library'
-        self.patchToApply['2.2.1'] = [("disable-broken-pdb-install.patch", 1)]
-        self.defaultTarget = '2.2.1'
+        self.defaultTarget = '2.5'
 
     def setDependencies(self):
         self.runtimeDependencies["virtual/base"] = None
 
 
-from Package.CMakePackageBase import *
+from Package.AutoToolsPackageBase import *
 
+class Package(AutoToolsPackageBase):
+    def __init__( self, **args ):
+        AutoToolsPackageBase.__init__( self )
+        self.subinfo.options.configure.bootstrap = True
+        prefix = self.shell.toNativePath(CraftCore.standardDirs.craftRoot())
+        self.subinfo.options.configure.args += " --prefix=" + prefix
 
-class Package(CMakePackageBase):
-    def __init__(self):
-        CMakePackageBase.__init__(self)
