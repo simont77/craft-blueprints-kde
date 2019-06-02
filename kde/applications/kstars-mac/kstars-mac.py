@@ -135,15 +135,11 @@ class Package(CMakePackageBase):
         utils.system("cp -Rf " + netpbmBinDir + " " + netpbmDestDir)
         
         #Embedded python for astrometry.
-        utils.system("mkdir -p " + KSTARS_APP + "/Contents/MacOS/python/bin")
-        utils.system("cp -f " + craftRoot + "/dev-utils/bin/python2 " + KSTARS_APP + "/Contents/MacOS/python/bin/python2.7")
-        
-        #Required numpy and pyfits for embedded astrometry
-        utils.system("mkdir -p " + KSTARS_APP + "/Contents/MacOS/python/bin/site-packages")
-        #This should be internal to craft, but the packages keep installing to homebrew python's location
-        utils.system("cp -RLf /usr/local/lib/python2.7/site-packages/numpy " + KSTARS_APP + "/Contents/MacOS/python/bin/site-packages/")
-        utils.system("cp -RLf /usr/local/lib/python2.7/site-packages/pyfits " + KSTARS_APP + "/Contents/MacOS/python/bin/site-packages/")
-        
+        utils.system("mkdir -p " + KSTARS_APP + "/Contents/MacOS/python")
+        utils.system("virtualenv -p /usr/local/bin/python2.7 --always-copy " + KSTARS_APP + "/Contents/MacOS/python")
+        utils.system("source " + KSTARS_APP + "/Contents/MacOS/python/bin/activate; pip2 install pyfits; deactivate")
+        utils.system("virtualenv --relocatable " + KSTARS_APP + "/Contents/MacOS/python")
+
         #	xplanet
         #planet picture setup?
         xplanet_dir = KSTARS_APP + "/Contents/MacOS/xplanet"
