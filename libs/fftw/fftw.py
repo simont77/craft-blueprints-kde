@@ -37,6 +37,7 @@ class Package(AutoToolsPackageBase):
         " --enable-sse2" \
         " --enable-avx" \
         " --enable-avx2" \
+        #" --enable-single" \
         " --prefix=" + prefix
         
 #This is required because of a current bug in fftw where it tries to include a non-existant file for projects that depend on fftw

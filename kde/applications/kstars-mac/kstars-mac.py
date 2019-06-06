@@ -133,12 +133,6 @@ class Package(CMakePackageBase):
         netpbmDestDir = "" + KSTARS_APP + "/Contents/MacOS/netpbm"
         utils.system("mkdir -p " + netpbmDestDir)
         utils.system("cp -Rf " + netpbmBinDir + " " + netpbmDestDir)
-        
-        #Embedded python for astrometry.
-        utils.system("mkdir -p " + KSTARS_APP + "/Contents/MacOS/python")
-        utils.system("virtualenv -p " + craftRoot + "/dev-utils/bin/python2 --always-copy " + KSTARS_APP + "/Contents/MacOS/python")
-        utils.system("source " + KSTARS_APP + "/Contents/MacOS/python/bin/activate; pip2 install pyfits; deactivate")
-        utils.system("virtualenv --relocatable " + KSTARS_APP + "/Contents/MacOS/python")
 
         #	xplanet
         #planet picture setup?
