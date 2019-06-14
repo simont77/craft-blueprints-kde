@@ -81,27 +81,27 @@ class Package(CMakePackageBase):
         imageDir = self.imageDir()
         craftRoot = CraftCore.standardDirs.craftRoot()
         INDI_WEB_MANAGER_APP = os.path.join(buildDir , 'INDIWebManagerApp.app')
-        INDI_WEB_MANAGER_RESOURCES = os.path.join(INDI_WEB_MANAGER_APP , 'Contents' , 'Resources')
-        INDI_WEB_MANAGER_PLUGINS = os.path.join(INDI_WEB_MANAGER_APP , 'Contents' , 'PlugIns')
+        INDI_WEB_MANAGER_APP_RESOURCES = os.path.join(INDI_WEB_MANAGER_APP , 'Contents' , 'Resources')
+        INDI_WEB_MANAGER_APP_PLUGINS = os.path.join(INDI_WEB_MANAGER_APP , 'Contents' , 'PlugIns')
         
         #	The Translations Directory
-       # utils.system("cp -rf " + craftRoot + "/share/locale " + INDI_WEB_MANAGER_RESOURCES)
+       # utils.system("cp -rf " + craftRoot + "/share/locale " + INDI_WEB_MANAGER_APP_RESOURCES)
 				
         #	INDI Drivers
         utils.system("mkdir -p " + INDI_WEB_MANAGER_APP + "/Contents/MacOS/indi")
         utils.system("cp -f " + craftRoot + "/bin/indi* " + INDI_WEB_MANAGER_APP + "/Contents/MacOS/indi/")
         
         #	INDI firmware files"
-        utils.system("mkdir -p " + INDI_WEB_MANAGER_RESOURCES + "/DriverSupport/")
-        utils.system("cp -rf " + craftRoot + "/usr/local/lib/indi/DriverSupport " + INDI_WEB_MANAGER_RESOURCES)
+        utils.system("mkdir -p " + INDI_WEB_MANAGER_APP_RESOURCES + "/DriverSupport/")
+        utils.system("cp -rf " + craftRoot + "/usr/local/lib/indi/DriverSupport " + INDI_WEB_MANAGER_APP_RESOURCES)
         
         #	Driver XML Files
-        utils.system("cp -f " + craftRoot + "/share/indi/* " + INDI_WEB_MANAGER_RESOURCES + "/DriverSupport/")
+        utils.system("cp -f " + craftRoot + "/share/indi/* " + INDI_WEB_MANAGER_APP_RESOURCES + "/DriverSupport/")
         
         #missed xml?
         
         #	Math Plugins
-        utils.system("cp -rf " + craftRoot + "/lib/indi/MathPlugins " + INDI_WEB_MANAGER_RESOURCES)
+        utils.system("cp -rf " + craftRoot + "/lib/indi/MathPlugins " + INDI_WEB_MANAGER_APP_RESOURCES)
         
         #	The gsc executable
         utils.system("cp -f " + craftRoot + "/bin/gsc " + INDI_WEB_MANAGER_APP + "/Contents/MacOS/indi/")
@@ -109,26 +109,26 @@ class Package(CMakePackageBase):
         #	GPhoto Plugins
         GPHOTO_VERSION = "2.5.18"
         PORT_VERSION = "0.12.0"
-        utils.system("mkdir -p " + INDI_WEB_MANAGER_RESOURCES + "/DriverSupport/gphoto/IOLIBS")
-        utils.system("mkdir -p " + INDI_WEB_MANAGER_RESOURCES + "/DriverSupport/gphoto/CAMLIBS")
-        utils.system("cp -rf " + craftRoot + "/lib/libgphoto2_port/" + PORT_VERSION + "/* " + INDI_WEB_MANAGER_RESOURCES + "/DriverSupport/gphoto/IOLIBS/")
-        utils.system("cp -rf " + craftRoot + "/lib/libgphoto2/" + GPHOTO_VERSION + "/* " + INDI_WEB_MANAGER_RESOURCES + "/DriverSupport/gphoto/CAMLIBS/")
+        utils.system("mkdir -p " + INDI_WEB_MANAGER_APP_RESOURCES + "/DriverSupport/gphoto/IOLIBS")
+        utils.system("mkdir -p " + INDI_WEB_MANAGER_APP_RESOURCES + "/DriverSupport/gphoto/CAMLIBS")
+        utils.system("cp -rf " + craftRoot + "/lib/libgphoto2_port/" + PORT_VERSION + "/* " + INDI_WEB_MANAGER_APP_RESOURCES + "/DriverSupport/gphoto/IOLIBS/")
+        utils.system("cp -rf " + craftRoot + "/lib/libgphoto2/" + GPHOTO_VERSION + "/* " + INDI_WEB_MANAGER_APP_RESOURCES + "/DriverSupport/gphoto/CAMLIBS/")
         
         #   Plugins
-        utils.system("cp -rf " + craftRoot + "/plugins/* " + INDI_WEB_MANAGER_PLUGINS)
+        utils.system("cp -rf " + craftRoot + "/plugins/* " + INDI_WEB_MANAGER_APP_PLUGINS)
         
         #	icons
-      #  utils.system("mkdir " + INDI_WEB_MANAGER_RESOURCES + "/icons")
-      #  utils.system("cp -f " + craftRoot + "/share/icons/breeze/breeze-icons.rcc " + INDI_WEB_MANAGER_RESOURCES + "/icons/")
-      #  utils.system("cp -f " + craftRoot + "/share/icons/breeze-dark/breeze-icons-dark.rcc " + INDI_WEB_MANAGER_RESOURCES + "/icons/")
+      #  utils.system("mkdir " + INDI_WEB_MANAGER_APP_RESOURCES + "/icons")
+      #  utils.system("cp -f " + craftRoot + "/share/icons/breeze/breeze-icons.rcc " + INDI_WEB_MANAGER_APP_RESOURCES + "/icons/")
+      #  utils.system("cp -f " + craftRoot + "/share/icons/breeze-dark/breeze-icons-dark.rcc " + INDI_WEB_MANAGER_APP_RESOURCES + "/icons/")
         
         # qt.conf
         confContents = "[Paths]\n"
         confContents += "Prefix = " + craftRoot + "\n"
         confContents += "Plugins = plugins\n"
         
-        utils.system("touch " + INDI_WEB_MANAGER_RESOURCES + "/qt.conf")
-        utils.system("echo \"" + confContents + "\" >> " + INDI_WEB_MANAGER_RESOURCES + "/qt.conf")
+        utils.system("touch " + INDI_WEB_MANAGER_APP_RESOURCES + "/qt.conf")
+        utils.system("echo \"" + confContents + "\" >> " + INDI_WEB_MANAGER_APP_RESOURCES + "/qt.conf")
         
         #	Editing the info.plist file
         pListFile = INDI_WEB_MANAGER_APP + "/Contents/info.plist"
@@ -137,9 +137,9 @@ class Package(CMakePackageBase):
         utils.system("plutil -insert NSHighResolutionCapable -string True " + pListFile)
         utils.system("plutil -insert NSRequiresAquaSystemAppearance -string NO " + pListFile)
         utils.system("plutil -replace CFBundleName -string INDIWebManagerApp " + pListFile)
-        utils.system("plutil -replace CFBundleVersion -string ${INDI_WEB_MANAGER_VERSION} " + pListFile)
-        utils.system("plutil -replace CFBundleLongVersionString -string ${INDI_WEB_MANAGER_VERSION} " + pListFile)
-        utils.system("plutil -replace CFBundleShortVersionString -string ${INDI_WEB_MANAGER_VERSION} " + pListFile)
+        utils.system("plutil -replace CFBundleVersion -string ${INDI_WEB_MANAGER_APP_VERSION} " + pListFile)
+        utils.system("plutil -replace CFBundleLongVersionString -string ${INDI_WEB_MANAGER_APP_VERSION} " + pListFile)
+        utils.system("plutil -replace CFBundleShortVersionString -string ${INDI_WEB_MANAGER_APP_VERSION} " + pListFile)
         utils.system("plutil -replace NSHumanReadableCopyright -string \"© 2019 Robert Lancaster, Freely Released under GNU GPL V2\" "  + pListFile)
 
         return True
