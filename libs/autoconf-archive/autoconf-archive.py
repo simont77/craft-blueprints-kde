@@ -13,7 +13,10 @@ class subinfo(info.infoclass):
 
     def setDependencies(self):
         self.runtimeDependencies["virtual/base"] = None
-        #self.runtimeDependencies["autoconf"] = None
+        self.runtimeDependencies["autoconf"] = None
+
+
+# I'm not sure why I had to rewrite the configure make and install commands, they failed when it was automatic.
 
 from Package.AutoToolsPackageBase import *
 
@@ -24,3 +27,20 @@ class Package(AutoToolsPackageBase):
         self.subinfo.options.configure.bootstrap = True
         self.subinfo.options.useShadowBuild = True
         self.subinfo.options.configure.args += " --prefix=" + prefix
+
+    def configure(self):
+        self.enterSourceDir()
+        prefix = self.shell.toNativePath(CraftCore.standardDirs.craftRoot())
+        utils.system("./configure --prefix=" + prefix)
+        return True
+    
+    def make(self):
+        self.enterSourceDir()
+        utils.system("make")
+        return True
+    
+    def install(self):
+        self.enterSourceDir()
+        utils.system("make install")
+        return True
+    

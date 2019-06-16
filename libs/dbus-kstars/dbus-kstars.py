@@ -12,7 +12,7 @@ class subinfo(info.infoclass):
 
     def setDependencies(self):
         self.runtimeDependencies["virtual/base"] = None
-       # self.runtimeDependencies["libs/autoconf-archive"] = None
+        self.runtimeDependencies["libs/autoconf-archive"] = None
 
 from Package.AutoToolsPackageBase import *
 
