@@ -51,7 +51,7 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/netpbmForKStars"] = "default"
         self.runtimeDependencies["libs/xplanet"] = "default"
         self.runtimeDependencies["libs/dbus-kstars"] = "default"
-        #self.runtimeDependencies["libs/gsc"] = "default"
+        self.runtimeDependencies["libs/gsc"] = "default"
         #Making these dependencies doesn't seem to download the latest versions, it downloads the default.
         #self.runtimeDependencies["libs/indiserver"] = "Latest"
         #self.runtimeDependencies["libs/indiserver3rdParty"] = "Latest"

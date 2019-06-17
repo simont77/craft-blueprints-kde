@@ -46,7 +46,7 @@ class subinfo(info.infoclass):
         
         self.runtimeDependencies["libs/libgphoto2"] = "default"
 
-        #self.runtimeDependencies["libs/gsc"] = "default"
+        self.runtimeDependencies["libs/gsc"] = "default"
         #Making these dependencies doesn't seem to download the latest versions, it downloads the default.
         #self.runtimeDependencies["libs/indiserver"] = "Latest"
         #self.runtimeDependencies["libs/indiserver3rdParty"] = "Latest"
