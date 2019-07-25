@@ -1,6 +1,5 @@
 import info
 
-
 class subinfo(info.infoclass):
     def setTargets(self):
         for ver in ['6.3']:
@@ -26,6 +25,13 @@ class Package(AutoToolsPackageBase):
         " --prefix=#{prefix}" \
         " --without-pgplot" \
         " --disable-fortran"
-        
         craftLibDir = os.path.join(prefix,  'lib')
         self.subinfo.options.configure.ldflags += '-Wl,-rpath,' + craftLibDir
+        
+    def postQmerge(self):
+        packageName = "libwcs"
+        root = CraftCore.standardDirs.craftRoot()
+        craftLibDir = os.path.join(root,  'lib')
+        utils.system("install_name_tool -add_rpath " + craftLibDir + " " + craftLibDir + "/" + packageName + ".dylib")
+        utils.system("install_name_tool -id @rpath/" + packageName + ".dylib " + craftLibDir + "/" + packageName + ".dylib")
+        return True
