@@ -25,4 +25,7 @@ class Package(AutoToolsPackageBase):
         self.subinfo.options.configure.args += " --disable-dependency-tracking" \
         " --prefix=#{prefix}" \
         " --without-pgplot" \
-        " --disable-fortran" \
+        " --disable-fortran"
+        
+        craftLibDir = os.path.join(prefix,  'lib')
+        self.subinfo.options.configure.ldflags += '-Wl,-rpath,' + craftLibDir
