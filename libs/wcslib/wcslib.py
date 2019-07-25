@@ -3,18 +3,26 @@ import info
 
 class subinfo(info.infoclass):
     def setTargets(self):
-        self.targets['0.1'] = 'http://indilib.org/jdownloads/kstars/wcslib-515.tar.bz2'
+        for ver in ['6.3']:
+            self.targets[ver] = 'https://www.atnf.csiro.au/pub/software/wcslib/wcslib-%s.tar.bz2' % ver
+            self.archiveNames[ver] = "wcslib-%s.tar.gz" % ver
+            self.targetInstSrc[ver] = 'wcslib-' + ver
 
-        self.defaultTarget = '0.1'
+        self.defaultTarget = '6.3'
 
     def setDependencies(self):
         self.runtimeDependencies["virtual/base"] = None
 
 
-from Package.CMakePackageBase import *
+from Package.AutoToolsPackageBase import *
 
-
-class Package(CMakePackageBase):
-    def __init__(self):
-        CMakePackageBase.__init__(self)
-        self.subinfo.options.configure.args = "-DENABLE_STATIC=ON"
+class Package(AutoToolsPackageBase):
+    def __init__( self, **args ):
+        AutoToolsPackageBase.__init__( self )
+        prefix = self.shell.toNativePath(CraftCore.standardDirs.craftRoot())
+        #self.subinfo.options.configure.bootstrap = True
+        self.subinfo.options.useShadowBuild = False
+        self.subinfo.options.configure.args += " --disable-dependency-tracking" \
+        " --prefix=#{prefix}" \
+        " --without-pgplot" \
+        " --disable-fortran" \
