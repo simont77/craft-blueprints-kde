@@ -145,7 +145,7 @@ class Package(CMakePackageBase):
         utils.system("tar -xzf " + KStarsMacFiles + "/maps_alien-1.0.tar -C " + xplanet_dir + " --strip-components=2")
         
         #	GPhoto Plugins
-        GPHOTO_VERSION = $(craft --print-installed | grep 'libs/libgphoto2' | cut -f 2 -d :)
+        GPHOTO_VERSION = utils.system("$(craft --print-installed | grep 'libs/libgphoto2' | cut -f 2 -d :)")
         PORT_VERSION = "0.12.0"
         utils.system("mkdir -p " + KSTARS_RESOURCES + "/DriverSupport/gphoto/IOLIBS")
         utils.system("mkdir -p " + KSTARS_RESOURCES + "/DriverSupport/gphoto/CAMLIBS")
