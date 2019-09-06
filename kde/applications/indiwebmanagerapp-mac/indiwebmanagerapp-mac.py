@@ -1,5 +1,6 @@
 import info
 import os
+import subprocess
 
 class subinfo(info.infoclass):
     def setTargets(self):
@@ -107,7 +108,7 @@ class Package(CMakePackageBase):
         utils.system("cp -f " + craftRoot + "/bin/gsc " + INDI_WEB_MANAGER_APP + "/Contents/MacOS/indi/")
         
         #	GPhoto Plugins
-        GPHOTO_VERSION = "2.5.18"
+        GPHOTO_VERSION = subprocess.getoutput("pkg-config --modversion libgphoto2")
         PORT_VERSION = "0.12.0"
         utils.system("mkdir -p " + INDI_WEB_MANAGER_APP_RESOURCES + "/DriverSupport/gphoto/IOLIBS")
         utils.system("mkdir -p " + INDI_WEB_MANAGER_APP_RESOURCES + "/DriverSupport/gphoto/CAMLIBS")
