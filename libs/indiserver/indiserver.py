@@ -8,12 +8,12 @@ class subinfo(info.infoclass):
     def setTargets(self):
         self.description = 'INDI Library'
         self.svnTargets['Latest'] = "https://github.com/indilib/indi.git"
-        self.targetInstSrc['Latest'] = "libindi"
+        self.targetInstSrc['Latest'] = ""
         
         ver = '1.7.8'
         self.svnTargets[ver] = "https://github.com/indilib/indi.git||v" + ver
         self.archiveNames[ver] = 'indi-%s.tar.gz' % ver
-        self.targetInstSrc[ver] = "libindi"
+        self.targetInstSrc[ver] = ""
 
         self.defaultTarget = ver
 
