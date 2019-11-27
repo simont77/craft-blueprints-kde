@@ -6,7 +6,8 @@ import os
 class subinfo(info.infoclass):
     def setTargets(self):
         for ver in ['1.2']:
-            self.targets[ver] = 'http://cdsarc.u-strasbg.fr/viz-bin/nph-Cat/tar.gz?bincats/GSC_' + ver
+           # self.targets[ver] = 'http://cdsarc.u-strasbg.fr/viz-bin/nph-Cat/tar.gz?bincats/GSC_' + ver
+            self.targets[ver] = 'http://www.indilib.org/jdownloads/kstars/gsc-1.2.tar.gz'
             self.archiveNames[ver] = "gsc-%s.tar.gz" % ver
             #self.targetInstSrc[ver] = 'gsc-' + ver
         self.description = 'The Guide Star Catalog I'
