@@ -4,7 +4,7 @@ import info
 class subinfo(info.infoclass):
     def setTargets(self):
         for ver in ['3.08', '3.10', '3.14', '3.20', '3.31', '3.35', '3.45']:
-            self.targets[ver] = 'ftp://heasarc.gsfc.nasa.gov/software/fitsio/c/cfitsio' + ver.replace(".",
+            self.targets[ver] = 'https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfitsio' + ver.replace(".",
                                                                                                       "") + '0.tar.gz'
             self.targetInstSrc[ver] = "cfitsio"
         self.targetDigests['3.20'] = 'f200fe0acba210e88e230add6a4e68d80ad3d4f2'
