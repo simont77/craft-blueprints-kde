@@ -73,6 +73,10 @@ class Package(CMakePackageBase):
         self.blacklist_file = ["blacklist.txt"]
         
     def make(self):
+        currentArgs = self.subinfo.options.configure.args
+        self.subinfo.options.configure.args = currentArgs + "-DFETCH_TRANSLATIONS=ON -DKDE_L10N_AUTO_TRANSLATIONS=ON"
+        super().make()
+        self.subinfo.options.configure.args = currentArgs + "-DFETCH_TRANSLATIONS=OFF -DKDE_L10N_AUTO_TRANSLATIONS=ON"
         if not super().make():
             return False
             
