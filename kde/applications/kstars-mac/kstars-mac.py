@@ -185,6 +185,7 @@ class Package(CMakePackageBase):
         confContents += "Plugins = plugins\n"
         confContents += "Imports = qml\n"
         confContents += "Qml2Imports = qml\n"
+        confContents += "Translations = " + craftRoot + "/share/locale\n"
         
         utils.system("touch " + KSTARS_RESOURCES + "/qt.conf")
         utils.system("echo \"" + confContents + "\" >> " + KSTARS_RESOURCES + "/qt.conf")
