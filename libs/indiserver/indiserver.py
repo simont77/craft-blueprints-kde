@@ -26,7 +26,7 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/libusb"] = "default"
         self.runtimeDependencies["libs/gsl"] = "default"
         self.runtimeDependencies["libs/libjpeg-turbo"] = "default"
-        self.runtimeDependencies["libs/fftw"] = "default"
+        self.runtimeDependencies["libs/fftw-double"] = "default"
 
 
 from Package.CMakePackageBase import *

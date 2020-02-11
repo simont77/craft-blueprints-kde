@@ -28,7 +28,7 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/libdc1394"] = "default"
         self.runtimeDependencies["libs/libraw"] = "default"
         self.runtimeDependencies["libs/tiff"] = "default"
-        self.runtimeDependencies["libs/fftw"] = "default"
+        self.runtimeDependencies["libs/fftw-double"] = "default"
         self.runtimeDependencies["libs/ffmpeg"] = "default"
         #Making these dependencies doesn't seem to download the latest versions, it downloads the default.
         #self.runtimeDependencies["libs/indiserver"] = "Latest"
