@@ -47,6 +47,7 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/libgphoto2"] = "default"
         self.runtimeDependencies["libs/astrometry.net"] = "default"
         self.runtimeDependencies["libs/astrometry.netForKStars"] = "default"
+        self.runtimeDependencies["libs/sextractor"] = "default"
         self.runtimeDependencies["libs/netpbm"] = "default"
         self.runtimeDependencies["libs/netpbmForKStars"] = "default"
         self.runtimeDependencies["libs/xplanet"] = "default"
