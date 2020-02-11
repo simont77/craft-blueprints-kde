@@ -133,6 +133,10 @@ class Package(CMakePackageBase):
         netpbmDestDir = "" + KSTARS_APP + "/Contents/MacOS/netpbm"
         utils.system("mkdir -p " + netpbmDestDir)
         utils.system("cp -Rf " + netpbmBinDir + " " + netpbmDestDir)
+        
+        #	Sextractor for astrometry
+        craftBinDir =  os.path.join(craftRoot , 'bin')
+        utils.system("cp -f " + craftBinDir + "/sex " + astrometryDestDir + "/bin/")
 
         #	xplanet
         #planet picture setup?
