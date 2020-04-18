@@ -4,11 +4,11 @@ import info
 class subinfo(info.infoclass):
     def setTargets(self):
         self.versionInfo.setDefaultValues()
+        self.patchToApply["5.62.0"] = [("ca501f5deaa2de3053e003a408aee6c65dc6206e.patch", 1)]
+        self.patchToApply["5.65.0"] = [("kio-5.65.0-20191219.diff", 1), ("kio-5.65.0-20200112.diff", 1)]
+        self.patchLevel["5.62.0"] = 1
 
         self.description = "Network transparent access to files and data"
-
-        self.patchToApply['5.31.0'] = ('0001-Fix-double-export-in-already-exported-class.patch', 1)
-        self.patchToApply['5.45.0'] = ('kio-5.45.0-20180416.diff', 1)
 
     def setDependencies(self):
         self.buildDependencies["virtual/base"] = None
@@ -41,5 +41,6 @@ from Package.CMakePackageBase import *
 class Package(CMakePackageBase):
     def __init__(self):
         CMakePackageBase.__init__(self)
+        self.subinfo.options.configure.args += f" -DKIO_ASSERT_SLAVE_STATES={'ON' if self.buildType() == 'Debug' else 'OFF'}"
         if OsUtils.isWin() or OsUtils.isMac():
-            self.subinfo.options.configure.args = " -DKIO_FORK_SLAVES=ON "
+            self.subinfo.options.configure.args += " -DKIO_FORK_SLAVES=ON "

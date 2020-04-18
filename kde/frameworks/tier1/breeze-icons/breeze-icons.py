@@ -4,6 +4,7 @@ import info
 class subinfo(info.infoclass):
     def setTargets(self):
         self.versionInfo.setDefaultValues()
+
         self.description = "Breeze icon theme."
 
     def registerOptions(self):
