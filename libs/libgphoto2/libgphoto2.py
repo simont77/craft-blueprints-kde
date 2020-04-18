@@ -4,12 +4,12 @@ import info
 
 class subinfo(info.infoclass):
     def setTargets(self):
-        for ver in ['2.5.23']:
+        for ver in ['2.5.24']:
             self.targets[ver] = 'https://downloads.sourceforge.net/project/gphoto/libgphoto/' + ver + '/libgphoto2-' + ver +  '.tar.bz2'
             self.archiveNames[ver] = "libgphoto2-%s.tar.gz" % ver
             self.targetInstSrc[ver] = 'libgphoto2-' + ver
         self.description = 'Gphoto2 digital camera library'
-        self.defaultTarget = '2.5.23'
+        self.defaultTarget = '2.5.24'
 
     def setDependencies(self):
         self.buildDependencies["libs/gettext"] = "default"
