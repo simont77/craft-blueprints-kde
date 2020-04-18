@@ -33,27 +33,19 @@ class subinfo(info.infoclass):
             self.targetInstSrc[ver] = f'openssl-{ver}'
             self.targetDigestUrls[ver] = ([f'{baseUrl}openssl-{ver}.tar.gz.sha256'], CraftHash.HashAlgorithm.SHA256)
 
-        # older versions  -> inside old/major.minor.patch/
-        for ver in ['1.0.2a', '1.0.2c', '1.0.2d', '1.0.2j', '1.0.2m',
-                    "1.1.0g", "1.1.0h", "1.1.1"]:
-            dir = re.search(r"\d+\.\d+.\d+", ver).group(0)
-            baseUrl = f'ftp://ftp.openssl.org/source/old/{dir}/'
-            addTarget(baseUrl, ver)
-
         # latest versions -> inside source/
-        for ver in ["1.0.2o", "1.1.0i", "1.1.1a"]:
-            baseUrl = 'ftp://ftp.openssl.org/source/'
+        for ver in ["1.0.2s", "1.1.1f"]:
+            baseUrl = 'https://openssl.org/source/'
             addTarget(baseUrl, ver)
 
-        self.patchLevel["1.1.0g"] = 1
+        self.patchLevel["1.1.1f"] = 1
 
         self.description = "The OpenSSL runtime environment"
 
         #set the default config for openssl 1.1
-        self.options.configure.args = "shared no-zlib threads no-rc5 no-idea no-ssl3-method no-weak-ssl-ciphers no-heartbeats"
+        self.options.configure.args = "shared no-zlib threads no-rc5 no-idea no-ssl3-method no-weak-ssl-ciphers no-heartbeats no-dynamic-engine --libdir=lib"
 
-        # 1.1.1a seems to be broken
-        self.defaultTarget = '1.1.1'
+        self.defaultTarget = '1.1.1f'
 
     def setDependencies(self):
         self.runtimeDependencies["virtual/base"] = None
@@ -79,15 +71,17 @@ class PackageCMake(CMakePackageBase):
         CMakePackageBase.__init__(self)
         self.staticBuild = False
         self.supportsNinja = False
+        self.subinfo.options.make.supportsMultijob = False
         if not self.subinfo.opensslUseLegacyBuildSystem:
-            self.subinfo.options.install.args = "install_sw install_ssldirs"
+            self.subinfo.options.install.args = "install_sw"
+
     def configure( self, defines=""):
         if self.subinfo.opensslUseLegacyBuildSystem:
             return True
         else:
             self.enterBuildDir()
             prefix = OsUtils.toUnixPath(CraftCore.standardDirs.craftRoot())
-            return utils.system(["perl", os.path.join(self.sourceDir(), "Configure"), f"--prefix={prefix}", f"--openssldir={prefix}/ssl"]
+            return utils.system(["perl", os.path.join(self.sourceDir(), "Configure"), f"--prefix={prefix}"]
                                 + self.subinfo.options.configure.args.split(" ")
                                 + ["-FS",
                                     f"-I{OsUtils.toUnixPath(os.path.join(CraftStandardDirs.craftRoot(), 'include'))}",
@@ -170,7 +164,7 @@ class PackageMSys(AutoToolsPackageBase):
         self.supportsCCACHE = False
         self.subinfo.options.configure.noDataRootDir = True
         if not self.subinfo.opensslUseLegacyBuildSystem:
-            self.subinfo.options.install.args = "install_sw install_ssldirs"
+            self.subinfo.options.install.args = "install_sw"
         else:
             self.subinfo.options.make.supportsMultijob = False
             self.subinfo.options.useShadowBuild = False
@@ -190,6 +184,7 @@ class PackageMSys(AutoToolsPackageBase):
                 AutoToolsPackageBase.make(self, dummyBuildType)
 
     def install(self):
+        self.subinfo.options.make.supportsMultijob = False
         if not self.subinfo.opensslUseLegacyBuildSystem:
             # TODO: don't install doc
             if not super().install():
