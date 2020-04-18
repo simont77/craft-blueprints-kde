@@ -10,6 +10,7 @@ class subinfo(info.infoclass):
         self.options.dynamic.registerOption("buildReleaseAndDebug", False)
         self.options.dynamic.registerOption("buildDoc", True)
         self.options.dynamic.registerOption("libInfix", "")
+        self.options.dynamic.registerOption("useLtcg", False)
 
     def setTargets(self):
         self.versionInfo.setDefaultValues()
@@ -18,6 +19,39 @@ class subinfo(info.infoclass):
             qtVer = CraftVersion(ver)
             if ver == "dev":
                 self.patchToApply[ver] = []
+            if qtVer >= "5.14.0":
+                self.patchToApply[ver] = [
+                    ("qdbus-manager-quit-5.7.patch", 1),  # https://phabricator.kde.org/D2545#69186
+                    ("workaround-mingw-egl.diff", 1),
+                    ("fix_GenericDataLocation_mac.patch", 1),
+                    ("qstandardpaths-extra-dirs.patch", 1),
+                    ("fix-harfbuzz.diff", 1),
+                ]
+            elif qtVer >= CraftVersion("5.12.7"):
+                self.patchToApply[ver] = [
+                    ("8a3fde00bf53d99e9e4853e8ab97b0e1bcf74915.patch", 1), # https://github.com/qt/qtbase/commit/8a3fde00bf53d99e9e4853e8ab97b0e1bcf74915
+                    ("qdbus-manager-quit-5.7.patch", 1),  # https://phabricator.kde.org/D2545#69186
+                    ("workaround-mingw-egl.diff", 1),
+                    ("fix_GenericDataLocation_mac.patch", 1),
+                    ("qstandardpaths-extra-dirs.patch", 1),
+                    ("qtbase-5.13.1-20191104.diff", 1)  # https://bugreports.qt.io/browse/QTBUG-72846
+                ]
+            elif qtVer >= CraftVersion("5.12.4"):
+                self.patchToApply[ver] = [
+                    ("qdbus-manager-quit-5.7.patch", 1),  # https://phabricator.kde.org/D2545#69186
+                    ("workaround-mingw-egl.diff", 1),
+                    ("fix_GenericDataLocation_mac.patch", 1),
+                    ("qstandardpaths-extra-dirs.patch", 1),
+                    ("qtbase-5.13.1-20191104.diff", 1)  # https://bugreports.qt.io/browse/QTBUG-72846
+                ]
+            elif qtVer >= CraftVersion("5.12.1"):
+                self.patchToApply[ver] = [
+                    ("qdbus-manager-quit-5.7.patch", 1),  # https://phabricator.kde.org/D2545#69186
+                    ("workaround-mingw-egl.diff", 1),
+                    ("fix_GenericDataLocation_mac.patch", 1),
+                    ("qstandardpaths-extra-dirs.patch", 1),
+                    ("qtbase-5.12.3-macos-debug.diff", 1) # https://codereview.qt-project.org/c/qt/qtbase/+/260917
+                ]
             elif qtVer >= CraftVersion("5.12.0"):
                 self.patchToApply[ver] = [
                     ("qdbus-manager-quit-5.7.patch", 1),  # https://phabricator.kde.org/D2545#69186
@@ -51,60 +85,17 @@ class subinfo(info.infoclass):
                     ("fix_GenericDataLocation_mac.patch", 1),
                     ("qstandardpaths-extra-dirs.patch", 1),
                 ]
-            elif qtVer >= CraftVersion("5.9.4") or qtVer == CraftVersion("5.9"):
-                self.patchToApply[ver] = [
-                    ("qdbus-manager-quit-5.7.patch", 1),  # https://phabricator.kde.org/D2545#69186
-                    ("0001-Fix-private-headers.patch", 1),  # https://bugreports.qt.io/browse/QTBUG-37417
-                    ("workaround-mingw-egl-qt5.9.4.diff", 1),
-                    ("0001-Add-APPDIR-data-APPNAME-5.9.4.patch", 1),  # https://codereview.qt-project.org/#/c/197855/
-                ]
-            elif qtVer >= CraftVersion("5.9.3"):
-                self.patchToApply[ver] = [
-                    ("qdbus-manager-quit-5.7.patch", 1),  # https://phabricator.kde.org/D2545#69186
-                    ("0001-Fix-private-headers.patch", 1),  # https://bugreports.qt.io/browse/QTBUG-37417
-                    ("0001-Add-APPDIR-data-APPNAME-to-the-non-Generic-paths-on-.patch", 1)]  # https://codereview.qt-project.org/#/c/197855/
-            elif qtVer >= CraftVersion("5.9"):
-                self.patchToApply[ver] = [
-                    ("fix-angle-mingw.patch", 1),
-                    ("qtbase-5.8.patch", 1),  # https://codereview.qt-project.org/#/c/149550/
-                    ("qdbus-manager-quit-5.7.patch", 1),  # https://phabricator.kde.org/D2545#69186
-                    ("hack-fix-syncqt.patch", 1),
-                    ("0001-Fix-private-headers.patch", 1),  # https://bugreports.qt.io/browse/QTBUG-37417
-                    ("0001-Add-APPDIR-data-APPNAME-to-the-non-Generic-paths-on-.patch", 1)]  # https://codereview.qt-project.org/#/c/197855/
-            elif qtVer >= CraftVersion("5.8"):
-                self.patchToApply[ver] = [
-                    ("fix-angle-mingw.patch", 1),
-                    ("qtbase-5.8.patch", 1),  # https://codereview.qt-project.org/#/c/141254/
-                    # https://codereview.qt-project.org/#/c/149550/
-                    ("qdbus-manager-quit-5.7.patch", 1)  # https://phabricator.kde.org/D2545#69186
-                ]
-            elif qtVer >= CraftVersion("5.7"):
-                self.patchToApply[ver] = [
-                    ("fix-angle-mingw.patch", 1),
-                    ("qtbase-5.7.patch", 1),  # https://codereview.qt-project.org/#/c/141254/
-                    # https://codereview.qt-project.org/#/c/149550/
-                    ("do-not-spawn-console-qprocess-startdetached.patch", 1),
-                    # https://codereview.qt-project.org/#/c/162585/
-                    ("qdbus-manager-quit-5.7.patch", 1)  # https://phabricator.kde.org/D2545#69186
-                ]
-            else:
-                self.patchToApply[ver] = [
-                    ("qmake-fix-install-root.patch", 1),
-                    ("qtbase-5.6.patch", 1),  # https://codereview.qt-project.org/#/c/141254/
-                    # https://codereview.qt-project.org/#/c/149550/
-                    ("do-not-spawn-console-qprocess-startdetached.patch", 1),
-                    # https://codereview.qt-project.org/#/c/162585/
-                    ("fix-angle-mingw-5.6.2-20161027.diff", 1),
-                    ("qdbus-manager-quit-5.7.patch", 1)  # https://phabricator.kde.org/D2545#69186
-                ]
+
 
         self.patchToApply["5.11.2"] += [
             ("0001-Export-qt_open64-from-QtCore.patch", 1), # fix 32 bit unix builds, backport of 4fc4f7b0ce0e6ee186a7d7fe9b5dd20e94efe432
         ]
-        self.patchLevel["5.9.4"] = 3
+
         self.patchLevel["5.11.0"] = 2
         self.patchLevel["5.11.2"] = 3
         self.patchLevel["5.12.0"] = 2
+        self.patchLevel["5.12.1"] = 2
+        self.patchLevel["5.12.3"] = 1
         self.description = "a cross-platform application framework"
 
     def setDependencies(self):
@@ -114,7 +105,7 @@ class subinfo(info.infoclass):
         self.buildDependencies["dev-utils/perl"] = None
         self.buildDependencies["dev-utils/flexbison"] = None
         if not self.options.buildStatic:
-            if CraftVersion(self.buildTarget) < CraftVersion("5.10") or CraftCore.settings.getboolean("QtSDK", "Enabled", False):
+            if CraftCore.settings.getboolean("QtSDK", "Enabled", False):
                 self.runtimeDependencies["libs/openssl"] = None
             else:
                 self.runtimeDependencies["libs/openssl"] = "1.1"
@@ -129,6 +120,14 @@ class QtPackage(Qt5CorePackageBase):
         Qt5CorePackageBase.__init__(self)
 
     def configure(self, unused1=None, unused2=""):
+        # https://github.com/qt/qtbase/blob/5.14/mkspecs/common/macx.conf#L8
+        if CraftCore.compiler.isMacOS and self.qtVer >= "5.12":
+            if self.qtVer >= "5.12":
+                mac_required = "10.12"
+            elif self.qtVer >= "5.14":
+                mac_required = "10.13"
+            if not CraftVersion(os.environ["MACOSX_DEPLOYMENT_TARGET"]) >= mac_required:
+                raise BlueprintException(f"Qt requires MACOSX_DEPLOYMENT_TARGET to be >= {mac_required}", self)
         with self.getQtBaseEnv():
             if CraftCore.compiler.isMinGW() and "DXSDK_DIR" not in os.environ:
                 CraftCore.log.critical("Failed to detec a DirectX SDK")
@@ -138,13 +137,6 @@ class QtPackage(Qt5CorePackageBase):
             self.enterBuildDir()
             if OsUtils.isWin():
                 configure = OsUtils.toUnixPath(os.path.join(self.sourceDir(), "configure.bat"))
-                if self.qtVer < CraftVersion("5.10"):
-                    # not needed anymore as we don't patch configure anymore
-                    if not os.path.exists(os.path.join(self.sourceDir(), ".gitignore")):  # force bootstrap of configure.exe
-                        with open(os.path.join(self.sourceDir(), ".gitignore"), "wt+") as bootstrap:
-                            bootstrap.write("Force Bootstrap")
-                        if os.path.exists(os.path.join(self.sourceDir(), "configure.exe")):
-                            os.remove(os.path.join(self.sourceDir(), "configure.exe"))
             elif OsUtils.isUnix():
                 configure = os.path.join(self.sourceDir(), "configure")
 
@@ -156,23 +148,17 @@ class QtPackage(Qt5CorePackageBase):
             command += "-qt-libpng "
             command += "-qt-libjpeg "
 
-            # can we drop that in general?
-            if self.qtVer <= "5.6":
-                command += "-c++11 "
-            if self.qtVer >= "5.8":
-                command += "-mp "
-            else:
-                command += "-qt-pcre "
+            command += "-mp "
 
-            if CraftCore.compiler.isMacOS and self.qtVer >= "5.10":
+            if CraftCore.compiler.isMacOS:
                 command += f"-macos-additional-datadirs \"{CraftCore.standardDirs.locations.data}\" "
 
             if OsUtils.isWin():
                 command += "-opengl dynamic "
                 command += "-plugin-sql-odbc "
 
-            # if not (OsUtils.isFreeBSD() or compiler.isMinGW()):#currently breaks unmaintained modules like qtscript and webkit
-            #    command += "-ltcg "
+            if self.subinfo.options.dynamic.useLtcg:
+                command += "-ltcg "
 
             if self.subinfo.options.dynamic.buildReleaseAndDebug:
                 command += "-debug-and-release "
@@ -181,8 +167,15 @@ class QtPackage(Qt5CorePackageBase):
             else:
                 command += "-release "
 
+            if not CraftCore.compiler.isWindows and self.buildType() != "Release":
+                command += "-separate-debug-info "
+
             if self.buildType() == "RelWithDebInfo":
                 command += "-force-debug-info "
+
+            if not self.subinfo.options.dynamic.buildReleaseAndDebug:
+                if self.buildType() == "Debug" and CraftCore.compiler.isMacOS:
+                    command += "-no-framework "
 
             if not self.subinfo.options.buildStatic:
                 command += "-I \"%s\" -L \"%s\" " % (
@@ -220,6 +213,9 @@ class QtPackage(Qt5CorePackageBase):
 
             if (CraftCore.compiler.isMSVC() and CraftCore.compiler.isClang()) or OsUtils.isUnix() or self.supportsCCACHE:
                 command += "-no-pch "
+            if self.supportsCCACHE:
+                command += "-ccache "
+
             if CraftCore.compiler.isLinux:
                 command += """-R "../lib" """
 
@@ -251,20 +247,27 @@ class QtPackage(Qt5CorePackageBase):
                                  f"--qt-dir={self.installDir()}",
                                  f"--new-dir={CraftStandardDirs.craftRoot()}"])
         else:
-            return self.patchInstallPrefix([os.path.join(self.installDir(), "bin", "qt.conf")],
+            if not self.patchInstallPrefix([os.path.join(self.installDir(), "bin", "qt.conf")],
                                            self.subinfo.buildPrefix,
-                                           CraftCore.standardDirs.craftRoot())
+                                           CraftCore.standardDirs.craftRoot()):
+                return False
+
+        # try to normalize the auto-detected paths during Qt build for non-debian distros
+        if CraftCore.compiler.isLinux:
+            files = utils.filterDirectoryContent(self.installDir(),
+                                             whitelist=lambda x, root: Path(x).suffix in {".cmake", ".prl", ".pri"},
+                                             blacklist=lambda x, root: True)
+            for f in files:
+                with open(f, "rb") as _f:
+                    old = _f.read()
+                with open(f, "wb") as _f:
+                    _f.write(re.sub(rb'/usr/lib/(\w+-\w+-\w+/)?lib(\w+)\.so', rb'-l\2', old))
+        return True
 
     def getQtBaseEnv(self):
-        envs = {}
+        envs = Qt5CoreBuildSystem._qtCoreEnv(self)
         envs["PATH"] = os.pathsep.join([os.path.join(self.buildDir(), "bin"), os.environ["PATH"]])
-        if self.qtVer < "5.9":
-            # so that the mkspecs can be found, when -prefix is set
-            envs["QMAKEPATH"] = self.sourceDir()
-        if self.qtVer < "5.8":
-            envs["QMAKESPEC"] = os.path.join(self.sourceDir(), 'mkspecs', self.platform)
-        else:
-            envs["QMAKESPEC"] = None
+        envs["QMAKESPEC"] = None
         return utils.ScopedEnv(envs)
 
 
