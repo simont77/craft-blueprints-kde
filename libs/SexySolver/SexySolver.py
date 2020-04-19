@@ -6,8 +6,8 @@ import info
 
 class subinfo(info.infoclass):
     def setTargets(self):
-        self.description = 'Sextractor and Astrometry Library Tester Program'
-        self.svnTargets['Latest'] = "https://github.com/rlancaste/astrometry-sextractor-tester.git"
+        self.description = 'SexySolver Sextractor and Astrometry.net based Library Tester Program'
+        self.svnTargets['Latest'] = "https://github.com/rlancaste/sexysolver-tester.git"
         self.targetInstSrc['Latest'] = ""
 
         self.defaultTarget = 'Latest'
@@ -17,6 +17,8 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/qt5/qtbase"] = "default"
         self.runtimeDependencies["libs/gsl"] = "default"
         self.runtimeDependencies["libs/cfitsio"] = "default"
+        self.runtimeDependencies["libs/zlib"] = "default"
+        self.runtimeDependencies["boost-regex"] = "default"
 
 
 
