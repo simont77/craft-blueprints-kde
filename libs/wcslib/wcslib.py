@@ -1,13 +1,13 @@
 import info
 
 class subinfo(info.infoclass):
-    def setTargets(self):
-        for ver in ['6.3']:
-            self.targets[ver] = 'https://www.atnf.csiro.au/pub/software/wcslib/wcslib-%s.tar.bz2' % ver
+    def setTargets(self):ftp://ftp.atnf.csiro.au/pub/software/wcslib/wcslib.tar.bz2
+        for ver in ['7.2']:
+            self.targets[ver] = 'ftp://ftp.atnf.csiro.au/pub/software/wcslib/wcslib-%s.tar.bz2' % ver
             self.archiveNames[ver] = "wcslib-%s.tar.gz" % ver
             self.targetInstSrc[ver] = 'wcslib-' + ver
 
-        self.defaultTarget = '6.3'
+        self.defaultTarget = '7.2'
 
     def setDependencies(self):
         self.runtimeDependencies["virtual/base"] = None
