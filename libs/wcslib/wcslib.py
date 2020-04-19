@@ -1,7 +1,7 @@
 import info
 
 class subinfo(info.infoclass):
-    def setTargets(self):ftp://ftp.atnf.csiro.au/pub/software/wcslib/wcslib.tar.bz2
+    def setTargets(self):
         for ver in ['7.2']:
             self.targets[ver] = 'ftp://ftp.atnf.csiro.au/pub/software/wcslib/wcslib-%s.tar.bz2' % ver
             self.archiveNames[ver] = "wcslib-%s.tar.gz" % ver
