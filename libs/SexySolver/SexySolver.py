@@ -16,6 +16,7 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["virtual/base"] = "default"
         self.runtimeDependencies["libs/qt5/qtbase"] = "default"
         self.runtimeDependencies["libs/gsl"] = "default"
+        self.runtimeDependencies["libs/mman"] = "default"
         self.runtimeDependencies["libs/cfitsio"] = "default"
         self.runtimeDependencies["libs/zlib"] = "default"
         self.runtimeDependencies["boost-regex"] = "default"
@@ -35,7 +36,7 @@ class Package(CMakePackageBase):
 
     def createPackage(self):
         self.defines["executable"] = "bin\\SexySolver.exe"
-        self.defines["icon"] = os.path.join(self.packageDir(), "SexySolverIcon.ico")
+        self.defines["icon"] = os.path.join(self.packageDir(), "SexySolverInstallIcon.ico")
         if isinstance(self, AppxPackager):
               self.defines["display_name"] = "SexySolver"
         return TypePackager.createPackage(self)
