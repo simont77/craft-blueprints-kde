@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import info
-from Package.CMakePackageBase import *
+
 
 class subinfo(info.infoclass):
     def setTargets(self):
@@ -17,16 +17,17 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/libusb-compat"] = "default"
         #gd and libexif might be needed too
 
-class Package(CMakePackageBase):
-    def __init__(self):
-        CMakePackageBase.__init__(self)
-        root = CraftCore.standardDirs.craftRoot()
-        craftLibDir = os.path.join(root,  'lib')
-        self.subinfo.options.configure.args = "-DCMAKE_INSTALL_PREFIX=" + root + " -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MACOSX_RPATH=1 -DCMAKE_INSTALL_RPATH=" + craftLibDir
+from Package.AutoToolsPackageBase import *
 
-
-
-
+class Package(AutoToolsPackageBase):
+    def __init__( self, **args ):
+        AutoToolsPackageBase.__init__( self )
+        prefix = self.shell.toNativePath(CraftCore.standardDirs.craftRoot())
+       	#self.subinfo.options.configure.bootstrap = True
+       	self.subinfo.options.useShadowBuild = False
+        self.subinfo.options.configure.args += " --disable-dependency-tracking" \
+        " --disable-silent-rules" \
+        " --prefix=" + prefix
 
 
 
