@@ -26,7 +26,6 @@ class Package(AutoToolsPackageBase):
        	#self.subinfo.options.configure.bootstrap = True
        	self.subinfo.options.useShadowBuild = False
         self.subinfo.options.configure.args += " --disable-dependency-tracking" \
-        " --disable-silent-rules" \
         " --prefix=" + prefix
 
 
