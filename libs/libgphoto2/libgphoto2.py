@@ -4,7 +4,7 @@ from Package.CMakePackageBase import *
 
 class subinfo(info.infoclass):
     def setTargets(self):
-        self.gitTargets['Latest'] = "https://github.com/gphoto/libgphoto2"
+        self.targets['Latest'] = "https://github.com/gphoto/libgphoto2"
         self.description = 'Gphoto2 digital camera library'
         self.defaultTarget = 'Latest'
         self.targetInstSrc['Latest'] = ""
