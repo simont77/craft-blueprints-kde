@@ -4,9 +4,10 @@ from Package.CMakePackageBase import *
 
 class subinfo(info.infoclass):
     def setTargets(self):
-        self.svnTargets['Latest'] = "https://github.com/gphoto/libgphoto2"
+        self.gitTargets['Latest'] = "https://github.com/gphoto/libgphoto2"
         self.description = 'Gphoto2 digital camera library'
         self.defaultTarget = 'Latest'
+        self.targetInstSrc['Latest'] = ""
 
     def setDependencies(self):
         self.buildDependencies["libs/gettext"] = "default"
