@@ -4,7 +4,7 @@ import info
 
 class subinfo(info.infoclass):
     def setTargets(self):
-        self.svnTargets['Latest'] = "https://github.com/gphoto/libgphoto2.git"
+        self.svnTargets['Latest'] = "https://github.com/simont77/libgphoto2.git"
         self.description = 'Gphoto2 digital camera library'
         self.defaultTarget = 'Latest'
         self.targetInstSrc['Latest'] = ""
